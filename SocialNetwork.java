@@ -34,35 +34,38 @@ public class SocialNetwork {
         return null;
     }
     // Method to load people data from a file
-    public void loadPeopleData(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] personData = line.split(","); 
-                String identifier = personData[0]; 
+    public void loadPeopleData(String var1) {
+      try {
+         BufferedReader var2 = new BufferedReader(new FileReader(var1));
 
-                // Create a new Person object with the data, handling missing fields
-                Person person = new Person(
-                    identifier, 
-                    personData.length > 1 ? personData[1] : "", 
-                    personData.length > 2 ? personData[2] : "", 
-                    personData.length > 3 ? personData[3] : "", 
-                    personData.length > 4 ? personData[4] : "",
-                    personData.length > 5 ? personData[5] : "", 
-                    personData.length > 6 ? personData[6] : "", 
-                    new ArrayList<>(), // StudiedAt
-                    new ArrayList<>(), // WorkedAt
-                    new ArrayList<>(), // Movies
-                    personData.length > 7 ? personData[7] : ""  // GroupCode
-                );
-
-                // Add the person to the network
-                addPerson(person);
+         String var3;
+         try {
+            while((var3 = var2.readLine()) != null) {
+               String[] var4 = var3.split(",");
+               String var5 = var4[0];
+               Object var6 = var4.length > 7 ? Arrays.asList(var4[7].split(";")) : new ArrayList();
+               Object var7 = var4.length > 8 ? Arrays.asList(var4[8].split(";")) : new ArrayList();
+               Object var8 = var4.length > 9 ? Arrays.asList(var4[9].split(";")) : new ArrayList();
+               Person var9 = new Person(var5, var4.length > 1 ? var4[1] : null, var4.length > 2 ? var4[2] : null,
+                                        var4.length > 3 ? var4[3] : null, var4.length > 4 ? var4[4] : null, var4.length > 5 ? var4[5] : null,
+                                        var4.length > 6 ? var4[6] : null, (List)var6, (List)var7, (List)var8, var4.length > 10 ? var4[10] : null);
+               this.addPerson(var9);
             }
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
-        }
-    }
+         } catch (Throwable var11) {
+            try {
+               var2.close();
+            } catch (Throwable var10) {
+               var11.addSuppressed(var10);
+            }
+
+            throw var11;
+         }
+
+         var2.close();
+      } catch (IOException var12) {
+         System.err.println("Error reading file: " + var12.getMessage());
+      }
+   }
 
     // Method to load friendships from the file
     public void loadRelationships(String filename) {
