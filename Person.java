@@ -17,17 +17,17 @@ public class Person {
     public Person(String identifier, String name, String surname, String birthDate, String gender, 
                   String birthplace, String hometown, List<String> studiedAt, List<String> workedAt, 
                   List<String> movies, String groupCode) {
-        this.identifier = identifier;
-        this.name = name;
-        this.surname = surname;
-        this.birthDate = birthDate;
-        this.gender = gender;
-        this.birthplace = birthplace;
-        this.hometown = hometown;
-        this.studiedAt = studiedAt;
-        this.workedAt = workedAt;
-        this.movies = movies;
-        this.groupCode = groupCode;
+        this.identifier = identifier != null ? identifier : "";
+        this.name = name != null ? name : "";
+        this.surname = surname != null ? surname : "";
+        this.birthDate = birthDate != null ? birthDate : "";
+        this.gender = gender != null ? gender : "";
+        this.birthplace = birthplace != null ? birthplace : "";
+        this.hometown = hometown != null ? hometown : "";
+        this.studiedAt = studiedAt != null ? studiedAt : new ArrayList<>();
+        this.workedAt = workedAt != null ? workedAt : new ArrayList<>();
+        this.movies = movies != null ? movies : new ArrayList<>();
+        this.groupCode = groupCode != null ? groupCode : "";
     }
 
     // Getters for each attribute
