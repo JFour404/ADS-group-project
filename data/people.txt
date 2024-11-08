@@ -1,0 +1,7 @@
+Alice22,Alice,Johnson,14-05-1992,female,New York,Los Angeles,NYU,Google,Inception,G6124104
+Bob111,Bob,Smith,23-09-1985,male,London,London,Oxford;Harvard,Microsoft,The Godfather;Avatar,G6124104
+Carol789,Carol,Lee,08-11-1990,female,Sydney,Sydney,UNSW;MIT,Facebook;Tesla,Titanic;Interstellar;Inception,G6124104
+Dave56,Dave,Martin,30-04-1983,male,Chicago,Chicago,UChicago,IBM;SpaceX,The Dark Knight,G6124104
+Eve94,Eve,Kim,02-12-1995,female,Seoul,Seoul,SNU;Cambridge,Amazon;Samsung,Parasite;Joker,G6124104
+Frank333,Frank,Gonzalez,21-07-1988,male,Madrid,Madrid,UAM,Intel,The Godfather;Avatar,G6124104
+Grace201,Grace,Wong,19-03-1993,female,Hong Kong,Hong Kong,HKU;Berkeley,Uber,Spirited Away;Toy Story,G6124104

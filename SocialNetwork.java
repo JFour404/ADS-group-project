@@ -56,7 +56,8 @@ public class SocialNetwork {
     }
     // Method to load people data from a file
     public void loadPeopleData(String filename) {
-    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        filename = "data/" + filename;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] personData = line.split(","); 
@@ -93,6 +94,7 @@ public class SocialNetwork {
 
     // Method to load friendships from the file
     public void retrieveFriends(String filename) {
+        filename = "data/" + filename;
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -152,22 +154,22 @@ public class SocialNetwork {
         }
     }
 
-// Method to find persons by surname and print their relationships
-public void findPersonsBySurname(String surname) {
-    boolean found = false;
+    // Method to find persons by surname and print their relationships
+    public void findPersonsBySurname(String surname) {
+        boolean found = false;
 
-    for (Person person : peopleNetwork) {
-        if (person.getSurname().equals(surname)) {
-            found = true;
-            System.out.println("Person: " + person.getName() + " " + person.getSurname() + ", ID: " + person.getIdentifier());
-            printFriendships(person.getIdentifier());
+        for (Person person : peopleNetwork) {
+            if (person.getSurname().equals(surname)) {
+                found = true;
+                System.out.println("Person: " + person.getName() + " " + person.getSurname() + ", ID: " + person.getIdentifier());
+                printFriendships(person.getIdentifier());
+            }
+        }
+
+        if (!found) {
+            System.out.println("No persons with surname " + surname + " found in the network.");
         }
     }
-
-    if (!found) {
-        System.out.println("No persons with surname " + surname + " found in the network.");
-    }
-}
 
     private List<String> getFriends(String personId) {
         List<String> friends = new ArrayList<>();
@@ -253,13 +255,13 @@ public void findPersonsBySurname(String surname) {
     }
 }
     
-public List<Person> sortPeopleLexicographically(List<Person> people) {
-    List<Person> sortedList = new ArrayList<>(people);
-    sortedList.sort(Comparator.comparing(Person::getBirthplace)
-                               .thenComparing(Person::getSurname)
-                               .thenComparing(Person::getName));
-    return sortedList;
-}
+    public List<Person> sortPeopleLexicographically(List<Person> people) {
+        List<Person> sortedList = new ArrayList<>(people);
+        sortedList.sort(Comparator.comparing(Person::getBirthplace)
+                                .thenComparing(Person::getSurname)
+                                .thenComparing(Person::getName));
+        return sortedList;
+    }
 
     public List<Group> buildGroups() {
         Map<List<String>, List<Person>> movieGroups = new HashMap<>();
@@ -290,6 +292,7 @@ public List<Person> sortPeopleLexicographically(List<Person> people) {
     
     
 public void findNatives(String filename) {
+    filename = "data/" + filename;
     try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
         String line;
         Set<String> hometowns = new HashSet<>();
