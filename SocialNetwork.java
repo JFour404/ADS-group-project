@@ -58,6 +58,7 @@ public class SocialNetwork {
     public void loadPeopleData(String filename) {
         filename = "data/" + filename;
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        reader.readLine();
         String line;
         while ((line = reader.readLine()) != null) {
             String[] personData = line.split(","); 
@@ -96,6 +97,7 @@ public class SocialNetwork {
     public void retrieveFriends(String filename) {
         filename = "data/" + filename;
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] friends = line.split(",");
@@ -294,6 +296,7 @@ public class SocialNetwork {
 public void findNatives(String filename) {
     filename = "data/" + filename;
     try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        reader.readLine();
         String line;
         Set<String> hometowns = new HashSet<>();
         

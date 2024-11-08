@@ -1,3 +1,4 @@
+idperson,name,lastname,birthdate,gender,birthplace,home,studiedat,workplaces,films,groupcode
 Alice22,Alice,Johnson,14-05-1992,female,New York,Los Angeles,NYU,Google,Inception,G6124104
 Bob111,Bob,Smith,23-09-1985,male,London,London,Oxford;Harvard,Microsoft,The Godfather;Avatar,G6124104
 Carol789,Carol,Lee,08-11-1990,female,Sydney,Sydney,UNSW;MIT,Facebook;Tesla,Titanic;Interstellar;Inception,G6124104
