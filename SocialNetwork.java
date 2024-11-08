@@ -13,9 +13,10 @@ import java.util.regex.Pattern;
 public class SocialNetwork {
     private List<Person> peopleNetwork = new ArrayList<>();
     private List<Friendship> relationships = new ArrayList<>(); 
+    private List<Group> groups = new ArrayList<>();
 
     // Method to add a person to the network
-    public void addPerson(Person person) {
+    private void addPerson(Person person) {
         if (findPersonById(person.getIdentifier()) == null) {
             peopleNetwork.add(person);
             System.out.println(person.getName() + " added to the network.");
@@ -94,7 +95,7 @@ public class SocialNetwork {
 
 
     // Method to load friendships from the file
-    public void retrieveFriends(String filename) {
+    public void loadRelationships(String filename) {
         filename = "data/" + filename;
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             reader.readLine();
@@ -157,7 +158,7 @@ public class SocialNetwork {
     }
 
     // Method to find persons by surname and print their relationships
-    public void findPersonsBySurname(String surname) {
+    public void retrievePersonsFriends(String surname) {
         boolean found = false;
 
         for (Person person : peopleNetwork) {
@@ -257,7 +258,7 @@ public class SocialNetwork {
     }
 }
     
-    public List<Person> sortPeopleLexicographically(List<Person> people) {
+    private List<Person> sortPeopleLexicographically(List<Person> people) {
         List<Person> sortedList = new ArrayList<>(people);
         sortedList.sort(Comparator.comparing(Person::getBirthplace)
                                 .thenComparing(Person::getSurname)
@@ -267,7 +268,6 @@ public class SocialNetwork {
 
     public List<Group> buildGroups() {
         Map<List<String>, List<Person>> movieGroups = new HashMap<>();
-        List<Group> groups = new ArrayList<>();
         int groupCounter = 1; // Counter for sequential group codes
     
         for (Person person : peopleNetwork) {
@@ -293,61 +293,61 @@ public class SocialNetwork {
     }
     
     
-public void findNatives(String filename) {
-    filename = "data/" + filename;
-    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-        reader.readLine();
-        String line;
-        Set<String> hometowns = new HashSet<>();
-        
-        // Read identifiers from the file and collect hometowns
-        while ((line = reader.readLine()) != null) {
-            String identifier = line.trim();
-            Person person = findPersonById(identifier);
+    public void findNatives(String filename) {
+        filename = "data/" + filename;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            reader.readLine();
+            String line;
+            Set<String> hometowns = new HashSet<>();
             
-            // Check if person is found
-            if (person != null) {
-                System.out.println("Found person: " + person.getIdentifier() + ", Name: " + person.getName() + ", Surname: " + person.getSurname());
+            // Read identifiers from the file and collect hometowns
+            while ((line = reader.readLine()) != null) {
+                String identifier = line.trim();
+                Person person = findPersonById(identifier);
                 
-                // Get and trim hometown
-                String hometown = person.getHometown();
-                if (hometown != null) {
-                    hometown = hometown.trim();
-                    System.out.println("Hometown: [" + hometown + "]"); 
-                    hometowns.add(hometown);
-                } else {
-                    System.out.println("Hometown is null for this person.");
-                }
-            } else {
-                System.out.println("Person with ID " + identifier + " not found.");
-            }
-        }
-
-        // Retrieve and print people born in the hometowns found
-        System.out.println("Retrieving people from the found hometowns:");
-        for (String hometown : hometowns) {
-            System.out.println("People born in " + hometown + ":"); 
-            for (Person person : peopleNetwork) {
-                String birthplace = person.getBirthplace();
-                if (birthplace != null) {
-                    birthplace = birthplace.trim();
-                   if (birthplace.equalsIgnoreCase(hometown)) {
-                    System.out.println("Person: " + person.getIdentifier() + 
-                        ", Name: " + person.getName() + 
-                        ", Surname: " + person.getSurname() + 
-                        ", Birthplace: " + person.getBirthplace());
+                // Check if person is found
+                if (person != null) {
+                    System.out.println("Found person: " + person.getIdentifier() + ", Name: " + person.getName() + ", Surname: " + person.getSurname());
                     
-                    if (person.getStudiedAt() != null && !person.getStudiedAt().isEmpty()) {
-                        System.out.println("StudiedAt: " + String.join(", ", person.getStudiedAt()));
+                    // Get and trim hometown
+                    String hometown = person.getHometown();
+                    if (hometown != null) {
+                        hometown = hometown.trim();
+                        System.out.println("Hometown: [" + hometown + "]"); 
+                        hometowns.add(hometown);
                     } else {
-                        System.out.println("StudiedAt: Not Available");
+                        System.out.println("Hometown is null for this person.");
+                    }
+                } else {
+                    System.out.println("Person with ID " + identifier + " not found.");
+                }
+            }
+
+            // Retrieve and print people born in the hometowns found
+            System.out.println("Retrieving people from the found hometowns:");
+            for (String hometown : hometowns) {
+                System.out.println("People born in " + hometown + ":"); 
+                for (Person person : peopleNetwork) {
+                    String birthplace = person.getBirthplace();
+                    if (birthplace != null) {
+                        birthplace = birthplace.trim();
+                    if (birthplace.equalsIgnoreCase(hometown)) {
+                        System.out.println("Person: " + person.getIdentifier() + 
+                            ", Name: " + person.getName() + 
+                            ", Surname: " + person.getSurname() + 
+                            ", Birthplace: " + person.getBirthplace());
+                        
+                        if (person.getStudiedAt() != null && !person.getStudiedAt().isEmpty()) {
+                            System.out.println("StudiedAt: " + String.join(", ", person.getStudiedAt()));
+                        } else {
+                            System.out.println("StudiedAt: Not Available");
+                        }
+                    }
                     }
                 }
-                }
             }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
         }
-    } catch (IOException e) {
-        System.err.println("Error reading file: " + e.getMessage());
     }
-}
 }

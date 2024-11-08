@@ -46,7 +46,7 @@ public class SocialNetworkMenu {
                 case 2:
                     System.out.print("Enter the filename to load 'relationships' (e.g., friends.txt): ");
                     String friendsFile = scanner.nextLine();
-                    socialNetwork.retrieveFriends(friendsFile);
+                    socialNetwork.loadRelationships(friendsFile);
                     break;
                 case 3:
                     socialNetwork.printPeopleToFile();
@@ -57,9 +57,9 @@ public class SocialNetworkMenu {
                     socialNetwork.searchPerson(id);
                     break;
                 case 5:
-                    System.out.print("Enter the person's surname to print friendships: ");
+                    System.out.print("Enter the person's surname to print his/her friendships: ");
                     String personId = scanner.nextLine();
-                    socialNetwork.findPersonsBySurname(personId);
+                    socialNetwork.retrievePersonsFriends(personId);
                     break;
                 case 6:
                     System.out.print("Enter the identifier of the person to delete: ");
@@ -90,7 +90,7 @@ public class SocialNetworkMenu {
                     socialNetwork.findNatives(residentialFile);
                     break;
                 case 10:
-                    List<Group> groups = socialNetwork.buildGroups();
+                    socialNetwork.buildGroups();
                     break;
                 case 0:
                     System.out.println("Logging out...");
