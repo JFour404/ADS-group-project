@@ -121,7 +121,7 @@ public class SocialNetwork {
         if (peopleNetwork.isEmpty()) {
             System.out.println("No people in the network.");
         } else {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("people_output.txt"))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/people_output.txt"))) {
                 for (Person person : peopleNetwork) {
                     writer.write(person.getIdentifier() + ": " + person.getName() + " " + person.getSurname());
                     writer.newLine(); 
