@@ -441,7 +441,69 @@ public class SocialNetwork {
         }
     }
 
-    public void retrieveCliques(){
-
+    public void retrieveCliques() {
+        List<Set<String>> cliques = new ArrayList<>();
+        Set<String> allNodes = new HashSet<>();
+        for (Person person : peopleNetwork) {
+            allNodes.add(person.getIdentifier());
+        }
+        bronKerbosch(new HashSet<>(), allNodes, new HashSet<>(), cliques);
+    
+        // Filter cliques with more than 4 members
+        List<Set<String>> largeCliques = new ArrayList<>();
+        for (Set<String> clique : cliques) {
+            if (clique.size() > 4) {
+                largeCliques.add(clique);
+            }
+        }
+    
+        // Print the cliques
+        if (largeCliques.isEmpty()) {
+            System.out.println("No cliques with more than 4 members found.");
+        } else {
+            System.out.println("Cliques with more than 4 members:");
+            for (Set<String> clique : largeCliques) {
+                System.out.println(clique);
+            }
+        }
+    }
+    
+    private void bronKerbosch(Set<String> R, Set<String> P, Set<String> X, List<Set<String>> cliques) {
+        if (P.isEmpty() && X.isEmpty()) {
+            cliques.add(new HashSet<>(R));
+            return;
+        }
+    
+        // Choose a pivot to reduce the number of recursive calls
+        String pivot = null;
+        int maxFriends = -1;
+        Set<String> unionPX = new HashSet<>(P);
+        unionPX.addAll(X);
+        for (String personId : unionPX) {
+            int numFriends = getFriends(personId).size();
+            if (numFriends > maxFriends) {
+                maxFriends = numFriends;
+                pivot = personId;
+            }
+        }
+    
+        Set<String> candidates = new HashSet<>(P);
+        candidates.removeAll(getFriends(pivot));
+    
+        for (String personId : candidates) {
+            Set<String> newR = new HashSet<>(R);
+            newR.add(personId);
+    
+            Set<String> newP = new HashSet<>(P);
+            newP.retainAll(getFriends(personId));
+    
+            Set<String> newX = new HashSet<>(X);
+            newX.retainAll(getFriends(personId));
+    
+            bronKerbosch(newR, newP, newX, cliques);
+    
+            P.remove(personId);
+            X.add(personId);
+        }
     }
 }
