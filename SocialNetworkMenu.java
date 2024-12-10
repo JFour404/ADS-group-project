@@ -25,6 +25,9 @@ public class SocialNetworkMenu {
             System.out.println("8. Find people born between");
             System.out.println("9. Find people in the same hometowns");
             System.out.println("10. Group users by favourite movies");
+            System.out.println("11. Shortest chain connecting 2 people");
+            System.out.println("12. Largest chain connecting 2 people");
+            System.out.println("13. Retrieve all the cliques (> 4 people)");
             System.out.println("0. Log out");
             System.out.print("Enter your choice: ");
 
@@ -91,6 +94,23 @@ public class SocialNetworkMenu {
                     break;
                 case 10:
                     socialNetwork.buildGroups();
+                    break;
+                case 11:
+                    System.out.print("Enter the identifier of the first person: ");
+                    String sFirstPersonId = scanner.nextLine();
+                    System.out.print("Enter the identifier of the second person: ");
+                    String sSecondPersonId = scanner.nextLine();
+                    socialNetwork.findShortestChain(sFirstPersonId, sSecondPersonId);
+                    break;
+                case 12:
+                    System.out.print("Enter the identifier of the first person: ");
+                    String lFirstPersonId = scanner.nextLine();
+                    System.out.print("Enter the identifier of the second person: ");
+                    String lSecondPersonId = scanner.nextLine();
+                    socialNetwork.findLongestChain(lFirstPersonId, lSecondPersonId);
+                    break;                
+                case 13:
+                    socialNetwork.retrieveCliques();
                     break;
                 case 0:
                     System.out.println("Logging out...");

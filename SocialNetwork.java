@@ -350,4 +350,16 @@ public class SocialNetwork {
             System.err.println("Error reading file: " + e.getMessage());
         }
     }
+
+    public void findShortestChain(String firstPersonId, String secondPersonId) {
+
+    }
+
+    public void findLongestChain(String firtstPersonId, String secondPersonId) {
+
+    }
+
+    public void retrieveCliques(){
+
+    }
 }
