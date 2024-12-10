@@ -1,11 +1,14 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -352,7 +355,46 @@ public class SocialNetwork {
     }
 
     public void findShortestChain(String firstPersonId, String secondPersonId) {
+        if (firstPersonId.equals(secondPersonId)) {
+            System.out.println("Both persons are the same.");
+            return;
+        }
 
+        Map<String, String> previous = new HashMap<>();
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+
+        queue.add(firstPersonId);
+        visited.add(firstPersonId);
+
+        while (!queue.isEmpty()) {
+            String current = queue.poll();
+            List<String> friends = getFriends(current);
+
+            for (String friend : friends) {
+                if (!visited.contains(friend)) {
+                    visited.add(friend);
+                    previous.put(friend, current);
+                    queue.add(friend);
+
+                    if (friend.equals(secondPersonId)) {
+                        printChain(firstPersonId, secondPersonId, previous);
+                        return;
+                    }
+                }
+            }
+        }
+
+        System.out.println("No chain found between " + firstPersonId + " and " + secondPersonId);
+    }
+
+    private void printChain(String start, String end, Map<String, String> previous) {
+        List<String> chain = new LinkedList<>();
+        for (String at = end; at != null; at = previous.get(at)) {
+            chain.add(at);
+        }
+        Collections.reverse(chain);
+        System.out.println("Shortest chain: " + String.join(" -> ", chain));
     }
 
     public void findLongestChain(String firtstPersonId, String secondPersonId) {
