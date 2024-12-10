@@ -397,8 +397,48 @@ public class SocialNetwork {
         System.out.println("Shortest chain: " + String.join(" -> ", chain));
     }
 
-    public void findLongestChain(String firtstPersonId, String secondPersonId) {
-
+    public void findLongestChain(String firstPersonId, String secondPersonId) {
+        List<String> longestPath = new ArrayList<>();
+        Set<String> visited = new HashSet<>();
+        List<String> currentPath = new ArrayList<>();
+        currentPath.add(firstPersonId);
+        visited.add(firstPersonId);
+    
+        int depthLimit = 16;
+    
+        backtracking(firstPersonId, secondPersonId, visited, currentPath, longestPath, depthLimit);
+    
+        if (longestPath.isEmpty()) {
+            System.out.println("No chain found between " + firstPersonId + " and " + secondPersonId);
+        } else {
+            System.out.println("Longest chain: " + String.join(" -> ", longestPath));
+        }
+    }
+    
+    private void backtracking(String current, String target, Set<String> visited, List<String> currentPath, List<String> longestPath, int depthLimit) {
+        if (current.equals(target)) {
+            if (currentPath.size() > longestPath.size()) {
+                longestPath.clear();
+                longestPath.addAll(new ArrayList<>(currentPath));
+            }
+            return;
+        }
+    
+        if (currentPath.size() >= depthLimit) {
+            return;
+        }
+    
+        for (String friend : getFriends(current)) {
+            if (!visited.contains(friend)) {
+                visited.add(friend);
+                currentPath.add(friend);
+    
+                backtracking(friend, target, visited, currentPath, longestPath, depthLimit);
+    
+                visited.remove(friend);
+                currentPath.remove(currentPath.size() - 1);
+            }
+        }
     }
 
     public void retrieveCliques(){
